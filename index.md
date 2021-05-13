@@ -10,7 +10,7 @@ In this project you need python 3.7 or newer
 
 1. To check your version write `python3 -V`
 
-2. To create an environment named bank_project write `python3 -m venv ibm-env`
+2. To create an environment named ibm-env write `python3 -m venv ibm-env`
 
 3. Navigate to the directory where your environment is located and write `source ibm-env/bin/activate` to activate your environment
 
