@@ -15,7 +15,6 @@
                         <a href="{% url 'whiteboard_app:deletePost' post.pk %}">Delete post</a>
                     {% endif %}
                 </div>
-                <!-- <div> -->
                 {% for comment in post.comments.all %}
                     <div class="d-flex py-2">
                         <div class="p-2" style="width:100%;background-color:white;border-radius: 4px;box-shadow: 10px 10px 5px #aaaaaa;"> <span class="text1" style="font-size: 13px;font-weight: 500;color: #56575b">{{comment.text}}</span>
@@ -25,21 +24,6 @@
                         </div>
                     </div>
                 {% endfor %}
-                
-                    <!-- <h4>Comments</h4>
-                    <div>
-                        {% if post.comments.all %}
-                        <div style="border:1px solid black;">
-                            {% for comment in post.comments.all %}
-                                <div>
-                                    <p>{{comment.user}} commented:</p>
-                                    <p>{{comment.text}}</p>
-                                </div>
-                            {% endfor %}
-                        </div>
-                        {% endif %}
-                    </div> -->
-                <!-- </div> -->
                 <div>
                     <form action="{% url 'whiteboard_app:createComment' %}" method="POST">
                         {% csrf_token %}

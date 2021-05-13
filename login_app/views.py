@@ -37,6 +37,8 @@ def password_reset(request):
         reset_request = PasswordResetRequest()
         reset_request.user = user
         reset_request.save()
+        # The password reset request creates a secret, which is turned into a
+        # clickable URL, which only works for a specific user
         url = reverse(
             "login_app:password_reset_secret", args=[f"{reset_request.secret}"]
         )
@@ -61,7 +63,8 @@ def password_reset_form(request):
     password = request.POST["password"]
     confirm_password = request.POST["confirm_password"]
     secret = request.POST["secret"]
-
+    # If the posted email matches the one on the secret, the password will
+    # be changed
     user = User.objects.get(email=email)
     reset_request = PasswordResetRequest.objects.get(user=user, secret=secret)
     if password == confirm_password:

@@ -21,6 +21,8 @@ class Post(models.Model):
         post.save()
 
 
+# The Comment model is attached to a user and a post, which allows me
+# to connect the comments for each post (with ForeignKeys)
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=CASCADE)
     text = models.CharField(max_length=280)
