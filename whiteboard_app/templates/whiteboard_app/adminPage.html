@@ -1,0 +1,16 @@
+{% extends 'whiteboard_app/base.html' %}
+{% block title %}Create Post{% endblock %}
+
+{% block content %}
+<h1>Change user roles</h1>
+{% for user in users %}
+    <form action="{% url 'whiteboard_app:adminPage' %}" method="POST">
+        {% csrf_token %}
+        <p>{{user.username}}</p>
+        <input type="hidden" name="pk" value="{{user.pk}}">
+        <label for="is_superuser">Superuser</label>
+        <input name="is_superuser" type="checkbox" value="1" {% if user.is_superuser %} checked {% endif %}>
+        <button class="btn btn-primary">Save</button>
+     </form>
+{% endfor %}
+{% endblock %}

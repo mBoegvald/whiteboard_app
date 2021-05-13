@@ -1,0 +1,54 @@
+{% extends 'whiteboard_app/base.html' %}
+{% block title %}Frontpage{% endblock %}
+{% load embed_video_tags %}
+
+{% block content %}
+    <h1>Welcome {{request.user.first_name}}</h1>
+    <div class="d-flex flex-wrap">
+        {% for post in posts %}
+            <div class="px-3 mb-5">
+                <h3>{{post.text}}</h3>
+                {% video post.url '426x240' %}
+                <div class="d-flex justify-content-between">
+                    <p>Posted by: {{post.user}}</p>
+                    {% if post.user == request.user %}
+                        <a href="{% url 'whiteboard_app:deletePost' post.pk %}">Delete post</a>
+                    {% endif %}
+                </div>
+                <!-- <div> -->
+                {% for comment in post.comments.all %}
+                    <div class="d-flex py-2">
+                        <div class="p-2" style="width:100%;background-color:white;border-radius: 4px;box-shadow: 10px 10px 5px #aaaaaa;"> <span class="text1" style="font-size: 13px;font-weight: 500;color: #56575b">{{comment.text}}</span>
+                            <div class="d-flex">
+                                <div><img src="https://media.istockphoto.com/vectors/person-gray-photo-placeholder-woman-vector-id1133765664?k=6&m=1133765664&s=612x612&w=0&h=L3jx8oBjd9SRZxQxxnoDdIDiqH2P77vsIi-Je40gOdg=" width="18"><span class="text2" style="font-size: 13px;font-weight: 500;margin-left: 6px;color: #56575b">{{comment.user}}</span></div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                
+                    <!-- <h4>Comments</h4>
+                    <div>
+                        {% if post.comments.all %}
+                        <div style="border:1px solid black;">
+                            {% for comment in post.comments.all %}
+                                <div>
+                                    <p>{{comment.user}} commented:</p>
+                                    <p>{{comment.text}}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div> -->
+                <!-- </div> -->
+                <div>
+                    <form action="{% url 'whiteboard_app:createComment' %}" method="POST">
+                        {% csrf_token %}
+                        <input class="form-control" type="hidden" name="post-pk" value="{{post.pk}}">
+                        <input class="form-control" type="text" name="comment" placeholder="Add a comment!">
+                        <button class="mt-2 btn btn-primary" class>Post comment</button>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
